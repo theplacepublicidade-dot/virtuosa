@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#00281f" />
+    <link rel="icon" href="assets/virtuosa-simbolo.png" />
+    <title>Virtuosa | Aula Secreta</title>
+    <style>
+      :root {
+        --verde: #00281f;
+        --verde-2: #07382d;
+        --creme: #f9f5ed;
+        --creme-2: #fffaf0;
+        --laranja: #f5a96a;
+        --texto: #fffaf0;
+        --sombra: rgba(0, 0, 0, 0.24);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--verde);
+      }
+
+      body {
+        min-height: 100%;
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--texto);
+        background:
+          radial-gradient(circle at 50% -8%, rgba(245, 169, 106, 0.16), transparent 34%),
+          linear-gradient(180deg, var(--verde-2) 0%, var(--verde) 52%, #001b15 100%);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        content: "";
+        background-image:
+          linear-gradient(rgba(255, 250, 240, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 250, 240, 0.03) 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 70%);
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 100dvh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: max(18px, env(safe-area-inset-top)) 14px max(24px, env(safe-area-inset-bottom));
+      }
+
+      .video-wrap {
+        width: min(100%, 430px);
+        margin: 0 auto;
+        padding: 8px;
+        border: 1px solid rgba(255, 250, 240, 0.11);
+        border-radius: 22px;
+        background: rgba(255, 250, 240, 0.055);
+        box-shadow: 0 22px 60px var(--sombra);
+        backdrop-filter: blur(8px);
+      }
+
+      .video-frame {
+        overflow: hidden;
+        border-radius: 16px;
+        background: #000;
+      }
+
+      vturb-smartplayer {
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .brand {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 18px auto 0;
+      }
+
+      .brand img {
+        width: min(54px, 15vw);
+        height: auto;
+        opacity: 0.72;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.12));
+      }
+
+      .cta-space {
+        display: grid;
+        width: min(100%, 430px);
+        min-height: 120px;
+        margin-top: 14px;
+        place-items: center;
+      }
+
+      .cta {
+        display: none;
+        width: 100%;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: opacity 0.45s ease, transform 0.45s ease;
+      }
+
+      .cta.is-visible {
+        display: block;
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .cta__button {
+        display: flex;
+        width: 100%;
+        min-height: 58px;
+        align-items: center;
+        justify-content: center;
+        padding: 17px 20px;
+        border: 0;
+        border-radius: 999px;
+        color: #1c1c1a;
+        background: linear-gradient(180deg, #ffc184 0%, var(--laranja) 100%);
+        box-shadow: 0 18px 38px rgba(245, 169, 106, 0.3);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        line-height: 1.15;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .cta__button:active {
+        transform: translateY(1px);
+      }
+
+      .cta__note {
+        margin: 10px 0 0;
+        color: rgba(255, 250, 240, 0.74);
+        font-size: 12px;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .cta.is-sticky {
+        position: fixed;
+        right: 14px;
+        bottom: max(14px, env(safe-area-inset-bottom));
+        left: 14px;
+        z-index: 5;
+        width: auto;
+        max-width: 430px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid rgba(255, 250, 240, 0.12);
+        border-radius: 24px;
+        background: rgba(0, 40, 31, 0.88);
+        box-shadow: 0 18px 54px rgba(0, 0, 0, 0.34);
+        backdrop-filter: blur(12px);
+      }
+
+      .cta.is-sticky + .cta-spacer {
+        display: block;
+      }
+
+      .cta-spacer {
+        display: none;
+        height: 126px;
+      }
+
+      @media (min-width: 720px) {
+        .page {
+          justify-content: center;
+          padding-block: 32px;
+        }
+
+        .video-wrap,
+        .cta-space {
+          width: 430px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="video-wrap" aria-label="Aula Secreta Virtuosa">
+        <div class="video-frame" id="videoArea">
+          <vturb-smartplayer id="vid-6a9b85141097df4734889347" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 177.77777777777777% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>
+        </div>
+      </section>
+
+      <div class="brand" aria-label="Virtuosa">
+        <img src="assets/virtuosa-simbolo.png" alt="Virtuosa" />
+      </div>
+
+      <div class="cta-space">
+        <section class="cta" id="ctaBlock" aria-live="polite">
+          <a class="cta__button" id="ctaButton" href="#" rel="nofollow">
+            Quero entrar para a turma fundadora
+          </a>
+          <p class="cta__note">Acesso vitalício · pagamento único · garantia de 30 dias</p>
+        </section>
+        <div class="cta-spacer" aria-hidden="true"></div>
+      </div>
+    </main>
+
+    <script type="text/javascript">
+      var s = document.createElement("script");
+      s.src = "https://scripts.converteai.net/43449fee-70a7-4a3a-a8ae-1512c0c40268/players/6a9b85141097df4734889347/v4/player.js";
+      s.async = true;
+      document.head.appendChild(s);
+    </script>
+
+    <script>
+      const CTA_DELAY_SECONDS = 15 * 60 + 45;
+      const CHECKOUT_URL = "";
+      const STORAGE_KEY = "virtuosa-vsl-cta-visible";
+
+      const ctaBlock = document.getElementById("ctaBlock");
+      const ctaButton = document.getElementById("ctaButton");
+      const videoArea = document.getElementById("videoArea");
+      let timerStarted = false;
+      let revealTimer = null;
+
+      function revealCta() {
+        window.localStorage.setItem(STORAGE_KEY, "true");
+        ctaBlock.classList.add("is-visible", "is-sticky");
+      }
+
+      function startCtaTimer() {
+        if (timerStarted) return;
+        timerStarted = true;
+        revealTimer = window.setTimeout(revealCta, CTA_DELAY_SECONDS * 1000);
+      }
+
+      function configureCheckout() {
+        if (CHECKOUT_URL) {
+          ctaButton.href = CHECKOUT_URL;
+          return;
+        }
+
+        ctaButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          alert("Cole o link de checkout no campo CHECKOUT_URL do arquivo index.html.");
+        });
+      }
+
+      function boot() {
+        configureCheckout();
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("cta") === "1" || window.localStorage.getItem(STORAGE_KEY) === "true") {
+          revealCta();
+          return;
+        }
+
+        startCtaTimer();
+        videoArea.addEventListener("pointerdown", startCtaTimer, { once: true });
+        videoArea.addEventListener("touchstart", startCtaTimer, { once: true, passive: true });
+        videoArea.addEventListener("keydown", startCtaTimer, { once: true });
+      }
+
+      boot();
+    </script>
+  </body>
+</html>
